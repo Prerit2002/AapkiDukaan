@@ -23,37 +23,118 @@ const personalDetails = new mongoose.Schema({
     }
 })
 
+const PromoCode = new Mongoose.Schema({
+    Code:  {  
+        type: String,
+        required: true
+    },
+    ExpiryDate : {
+        type: Date,
+        required: true
+    },
+    Discount : {
+        type: Number,
+        required: true
+    },
+    MaxDiscount : {
+        type: Number,
+        required: true
+    }
+})
+
 const Billing = new Mongoose.Schema({
-   bill: [{
-       billAmount: {
-        type:Number,
-        required:true
-       },
-       startDate: {
-           type: Date,
-           required:true
-       },
-       endDate: {
-        type:Date,
-        required:true
-       },
-       paymentStatus: {
-        type:Boolean,
-        required:true
-       },
-       dueDate:{
-        type:Date,
-        required:true
-       }
-   }]
+    BillAmt:  {  
+        type: String,
+        required: true
+    },
+    StartDate : {
+        type: Date,
+        required: true
+    },
+    EndDate : {
+        type: Date,
+        required: true
+    },
+    PaymentStatus : {
+        type: Boolean,
+        required: true
+    },
+    DueDate : {
+        type: Date,
+        required: true
+    }
+})
+
+const CustomerData = new Mongoose.Schema({
+    Name:  {  
+        type: String,
+        required: true
+    },
+    Address:  {  
+        type: String,
+        required: true
+    },
+    Email : {
+        type: String,
+        required: true
+    }
+})
+
+const Transaction = new Mongoose.Schema({
+    ProdId:  {  
+        type: String,
+        required: true
+    },
+    CustId : {
+        type: String,
+        required: true
+    },
+    Price : {
+        type: Number,
+        required: true
+    },
+    Type : {
+        type: String,
+        required: true
+    },
+    Date : {
+        type: Date,
+        required: true
+    },
+    PromoCode : {
+        type: String,
+        required: true
+    },
+    Commission: {
+        type :Number,
+        required: true
+    }
+})
+
+const Sales = new Mongoose.Schema({
+    CustomerData : CustomerData,
+    Transaction : Transaction
+})
+
+const Products = new Mongoose.Schema({
+    Variant : [{
+        Price : {
+            type : Number,
+            required : true
+        }
+    }],
+    CategoryId : {
+        type : Number,
+        required : true
+    }
 })
 
 const sellerSchema = new Mongoose.Schema({
-    personalDetails = [personalDetails],
-    bills: Billing,
-
-
-
+    PersonalDetails = [personalDetails],
+    Bills: [Billing],
+    Sales : [Sales],
+    PromoCode : [PromoCode],
+    Products: [Products]
 })
 
 
