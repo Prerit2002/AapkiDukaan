@@ -82,12 +82,14 @@ const CustomerData = new Mongoose.Schema({
 
 const Transaction = new Mongoose.Schema({
     ProdId:  {  
-        type: String,
-        required: true
+        type : mongoose.Schema.Types.ObjectId,
+        required : true,
+        ref : 'Products'
     },
     CustId : {
-        type: String,
-        required: true
+        type : mongoose.Schema.Types.ObjectId,
+        required : true,
+        ref : 'Customers'
     },
     Price : {
         type: Number,
@@ -101,9 +103,10 @@ const Transaction = new Mongoose.Schema({
         type: Date,
         required: true
     },
-    PromoCode : {
-        type: String,
-        required: true
+    PromoCodeId : {
+        type : mongoose.Schema.Types.ObjectId,
+        required : true,
+        ref : PromoCode
     },
     Commission: {
         type :Number,
@@ -117,6 +120,11 @@ const Sales = new Mongoose.Schema({
 })
 
 const Products = new Mongoose.Schema({
+    ProductId : {
+        type : mongoose.Schema.Types.ObjectId,
+        required : true,
+        ref : 'Products'
+    },
     Variant : [{
         Price : {
             type : Number,
@@ -124,8 +132,9 @@ const Products = new Mongoose.Schema({
         }
     }],
     CategoryId : {
-        type : Number,
-        required : true
+        type : mongoose.Schema.Types.ObjectId,
+        required : true,
+        ref : 'Pricing'
     }
 })
 
