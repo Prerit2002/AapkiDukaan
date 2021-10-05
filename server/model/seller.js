@@ -82,12 +82,12 @@ const CustomerData = new Mongoose.Schema({
 
 const Transaction = new Mongoose.Schema({
     ProdId:  {  
-        type : mongoose.Schema.Types.ObjectId,
+        type : Mongoose.Schema.Types.ObjectId,
         required : true,
         ref : 'Products'
     },
     CustId : {
-        type : mongoose.Schema.Types.ObjectId,
+        type : Mongoose.Schema.Types.ObjectId,
         required : true,
         ref : 'Customers'
     },
@@ -103,11 +103,6 @@ const Transaction = new Mongoose.Schema({
         type: Date,
         required: true
     },
-    PromoCodeId : {
-        type : mongoose.Schema.Types.ObjectId,
-        required : true,
-        ref : PromoCode
-    },
     Commission: {
         type :Number,
         required: true
@@ -121,7 +116,7 @@ const Sales = new Mongoose.Schema({
 
 const Products = new Mongoose.Schema({
     ProductId : {
-        type : mongoose.Schema.Types.ObjectId,
+        type : Mongoose.Schema.Types.ObjectId,
         required : true,
         ref : 'Products'
     },
@@ -132,7 +127,7 @@ const Products = new Mongoose.Schema({
         }
     }],
     CategoryId : {
-        type : mongoose.Schema.Types.ObjectId,
+        type : Mongoose.Schema.Types.ObjectId,
         required : true,
         ref : 'Pricing'
     }
@@ -140,7 +135,7 @@ const Products = new Mongoose.Schema({
 
 const sellerSchema = new Mongoose.Schema({
     sellerId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Mongoose.Schema.Types.ObjectId,
         required: true,
         ref:'Pricing'
     },
@@ -151,7 +146,7 @@ const sellerSchema = new Mongoose.Schema({
     Products: [Products]
 })
 
-const Seller = mongoose.model('Seller', sellerSchema)
+const Seller = Mongoose.model('Seller', sellerSchema)
 
 module.exports = Seller
 

@@ -1,7 +1,8 @@
 const express = require("express");
 const app = express();
 const connectDB = require('./server/database/connection');
-
+const dotenv = require('dotenv');
+dotenv.config( { path : 'config.env'} )
 const morgan = require('morgan');
 const path = require('path');
 const cors = require("cors");

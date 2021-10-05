@@ -7,3 +7,6 @@ route.post(
     "/api/createseller",
     seller.createSeller
   );
+
+
+module.exports = route;

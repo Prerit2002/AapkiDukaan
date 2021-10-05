@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const Address = new mongoose.Schema({
+const Mongoose = require('mongoose')
+const Address = new Mongoose.Schema({
     Hno : {
         type:Number,
         required:true
@@ -21,7 +21,7 @@ const Address = new mongoose.Schema({
         required:true
     }
 })
-const PurchaseHistory = new mongoose.Schema({
+const PurchaseHistory = new Mongoose.Schema({
     SellerId : {
         type:String,
         required:true
@@ -64,6 +64,6 @@ const CustomerSchema = new Mongoose.Schema({
     PurchaseHistory : [PurchaseHistory]
 })
 
-const Customers = mongoose.model("Customers", CustomerSchema);
+const Customers = Mongoose.model("Customers", CustomerSchema);
 
 module.exports = Customers;

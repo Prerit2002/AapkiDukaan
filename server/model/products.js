@@ -28,7 +28,7 @@ const ProductSchema = new mongoose.Schema({
     variantArray: [Variant]
 })
 
-ProductSchema.virtuals('ProductId', {
+ProductSchema.virtual('ProductId', {
     ref: 'Products',
     localField: '_id',
     foreignField: 'ProductId'

@@ -19,12 +19,12 @@ const Payment = new Mongoose.Schema({
     SellerId : [Payments]
 })
 
-Payments.virtuals('sellerId', {
+Payments.virtual('sellerId', {
     ref: 'Seller',
     localField: '_id',
     foreignField: '_id'
 })
 
-const Pricing = mongoose.model("Pricing", Payment);
+const Pricing = Mongoose.model("Pricing", Payment);
 
 module.exports = Pricing;
