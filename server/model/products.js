@@ -1,9 +1,10 @@
 const mongoose = require('mongoose')
 const Variant = new mongoose.Schema({
     Ratings:{
-        CustId : {
-            type:String,
-            required: true
+        SellerId : {
+            type : mongoose.Schema.Types.ObjectId,
+            required : true,
+            ref : 'Seller'
         },
         Stars : {
             type: Number,
@@ -21,18 +22,25 @@ const Variant = new mongoose.Schema({
 })
 
 const ProductSchema = new mongoose.Schema({
-    description:{
+    Name:{
         type:String,
         
     },
-    variantArray: [Variant]
+    Description:{
+        type:String,
+        
+    },
+    Variants: [Variant]
+},
+{
+    collection : 'Products'
 })
 
-ProductSchema.virtual('ProductId', {
-    ref: 'Products',
-    localField: '_id',
-    foreignField: 'ProductId'
-})
+// ProductSchema.virtual('ProductId', {
+//     ref: 'Products',
+//     localField: '_id',
+//     foreignField: 'ProductId'
+// })
 
 
 

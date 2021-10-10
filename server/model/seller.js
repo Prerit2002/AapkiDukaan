@@ -134,17 +134,16 @@ const Products = new Mongoose.Schema({
 })
 
 const sellerSchema = new Mongoose.Schema({
-    sellerId: {
-        type: Mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref:'Pricing'
-    },
     PersonalDetails : [personalDetails],
     Bills: [Billing],
     Sales : [Sales],
     PromoCode : [PromoCode],
     Products: [Products]
-})
+},
+    {
+        collection : 'Sellers'
+    }
+)
 
 const Seller = Mongoose.model('Seller', sellerSchema)
 

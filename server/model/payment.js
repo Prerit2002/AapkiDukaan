@@ -1,7 +1,6 @@
 const Mongoose = require('mongoose')
 const Seller = require('./seller')
 const Payments = new Mongoose.Schema({
-
     TxId : {
         type: String,
         required: true
@@ -17,6 +16,9 @@ const Payments = new Mongoose.Schema({
 })
 const Payment = new Mongoose.Schema({
     SellerId : [Payments]
+},
+{
+    collection : 'Payments'
 })
 
 Payments.virtual('sellerId', {

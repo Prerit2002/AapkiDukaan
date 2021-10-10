@@ -8,6 +8,9 @@ const PricingSchema = new Mongoose.Schema({
         type: Number,
         required: true
     }
+},
+{
+    collection : 'Pricing'
 })
 
 const Pricing = mongoose.model("Pricing", PricingSchema);

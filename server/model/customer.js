@@ -62,6 +62,9 @@ const CustomerSchema = new Mongoose.Schema({
         required: true
     },
     PurchaseHistory : [PurchaseHistory]
+}, 
+{
+    collection : 'Customers'
 })
 
 const Customers = Mongoose.model("Customers", CustomerSchema);
