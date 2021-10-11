@@ -79,6 +79,30 @@ const CustomerData = new Mongoose.Schema({
         required: true
     }
 })
+const WebsiteData = new Mongoose.Schema({
+    Domain:  {  
+        type: String,
+        required: true
+    },
+    Font:  {  
+        type: String,
+        required: true
+    },
+    ColorPallete : {
+        Color1 : {
+            type: String,
+            required: true
+        },
+        Color2 : {
+            type: String,
+            required: true
+        },
+        Color3 : {
+            type: String,
+            required: true
+        }
+    } 
+})
 
 const Transaction = new Mongoose.Schema({
     ProdId:  {  
@@ -134,11 +158,12 @@ const Products = new Mongoose.Schema({
 })
 
 const sellerSchema = new Mongoose.Schema({
-    PersonalDetails : [personalDetails],
+    PersonalDetails : personalDetails,
     Bills: [Billing],
     Sales : [Sales],
     PromoCode : [PromoCode],
-    Products: [Products]
+    Products: [Products],
+    WebsiteData : WebsiteData,
 },
     {
         collection : 'Sellers'
