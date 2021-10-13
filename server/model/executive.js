@@ -31,7 +31,7 @@ const personalDetails = new mongoose.Schema({
     }
 })
 
-const Leads = new Mongoose.Schema({
+const Leads = new mongoose.Schema({
     SellerId:  {  
         type : mongoose.Schema.Types.ObjectId,
         required : true,
@@ -43,7 +43,7 @@ const Leads = new Mongoose.Schema({
     }
 })
 
-const PayOuts = new Mongoose.Schema({
+const PayOuts = new mongoose.Schema({
     StartDate : {
         type: Date,
         required: true
@@ -66,7 +66,7 @@ const PayOuts = new Mongoose.Schema({
 })
 
 
-const ExecutiveSchema = new Mongoose.Schema({
+const ExecutiveSchema = new mongoose.Schema({
     PayOuts : [PayOuts],
     Leads: [Leads],
     personalDetails : personalDetails,
