@@ -3,17 +3,14 @@ const Variant = new mongoose.Schema({
     Ratings:{
         SellerId : {
             type : mongoose.Schema.Types.ObjectId,
-            required : true,
             ref : 'Seller'
         },
         Stars : {
             type: Number,
-            required: true
-        }
+        },
     },
     RatingAvg : {
         type:Number,
-        required:true
     },
     Variance:{
         type:String,

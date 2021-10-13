@@ -30,7 +30,6 @@ const PromoCode = new Mongoose.Schema({
     },
     ExpiryDate : {
         type: Date,
-        required: true
     },
     Discount : {
         type: Number,
