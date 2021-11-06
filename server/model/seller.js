@@ -1,6 +1,4 @@
 const Mongoose = require("mongoose");
-const Pricing = require("./payment");
-
 const personalDetails = new Mongoose.Schema({
   sellerName: {
     type: String,
@@ -101,6 +99,10 @@ const WebsiteData = new Mongoose.Schema({
       required: true,
     },
   },
+  ThemeId: {
+    type: Number,
+    required: true,
+  },
 });
 
 const Transaction = new Mongoose.Schema({
@@ -174,7 +176,6 @@ const sellerSchema = new Mongoose.Schema(
       type: String,
       required: true,
     },
-
     Email: {
       type: String,
       required: true,

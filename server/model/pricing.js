@@ -4,7 +4,7 @@ const PricingSchema = new Mongoose.Schema({
         type: String,
         required: true
     },
-    Commssion : {
+    Commission : {
         type: Number,
         required: true
     }
