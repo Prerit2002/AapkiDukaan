@@ -7,7 +7,7 @@ const morgan = require('morgan');
 const path = require('path');
 const cors = require("cors");
 const passport = require("passport");
-
+const uploads = require('./server/middleware/Uploads/')
 app.use(cors());
 app.use(express.json());
 app.use(morgan('tiny'));
@@ -15,6 +15,7 @@ app.use(passport.initialize());
 connectDB();
 app.use(express.urlencoded({ extended : true}))
 app.use('/', require('./server/routes/router'))
+app.use(uploads)
 
 
 app.listen(5000, () => {

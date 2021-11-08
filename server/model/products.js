@@ -1,45 +1,40 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 const Variant = new mongoose.Schema({
-    Ratings:{
-        SellerId : {
-            type : mongoose.Schema.Types.ObjectId,
-            ref : 'Seller'
-        },
-        Stars : {
-            type: Number,
-        },
+  Ratings: {
+    _id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Customer",
     },
-    RatingAvg : {
-        type:Number,
+    Stars: {
+      type: Number,
     },
-    Variance:{
-        type:String,
-        required:true
-    }
-})
+  },
+  RatingAvg: {
+    type: Number,
+  },
+  Variance: {
+    type: String,
+    required: true,
+  },
+});
 
-const ProductSchema = new mongoose.Schema({
-    Name:{
-        type:String,
-        
+const ProductSchema = new mongoose.Schema(
+  {
+    Name: {
+      type: String,
     },
-    Description:{
-        type:String,
-        
+    Description: {
+      type: String,
     },
-    Variants: [Variant]
-},
-{
-    collection : 'Products'
-})
-
-// ProductSchema.virtual('ProductId', {
-//     ref: 'Products',
-//     localField: '_id',
-//     foreignField: 'ProductId'
-// })
-
-
+    Photo: {
+      type: String,
+    },
+    Variants: [Variant],
+  },
+  {
+    collection: "Products",
+  }
+);
 
 const Products = mongoose.model("Products", ProductSchema);
 

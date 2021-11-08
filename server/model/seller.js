@@ -19,6 +19,9 @@ const personalDetails = new Mongoose.Schema({
   gender: {
     type: String,
   },
+  IdProof: {
+    type: String,
+  },
 });
 
 const PromoCode = new Mongoose.Schema({
@@ -62,20 +65,7 @@ const Billing = new Mongoose.Schema({
   },
 });
 
-const CustomerData = new Mongoose.Schema({
-  Name: {
-    type: String,
-    required: true,
-  },
-  Address: {
-    type: String,
-    required: true,
-  },
-  Email: {
-    type: String,
-    required: true,
-  },
-});
+
 const WebsiteData = new Mongoose.Schema({
   Domain: {
     type: String,
@@ -105,7 +95,7 @@ const WebsiteData = new Mongoose.Schema({
   },
 });
 
-const Transaction = new Mongoose.Schema({
+const Sales = new Mongoose.Schema({
   ProdId: {
     type: Mongoose.Schema.Types.ObjectId,
     required: true,
@@ -132,11 +122,6 @@ const Transaction = new Mongoose.Schema({
     type: Number,
     required: true,
   },
-});
-
-const Sales = new Mongoose.Schema({
-  CustomerData: CustomerData,
-  Transaction: Transaction,
 });
 
 const Products = new Mongoose.Schema({

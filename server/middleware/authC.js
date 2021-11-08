@@ -193,9 +193,8 @@ const findusers = (req, res) => {
 };
 
 
-
 module.exports = {
-    userAuth,
+  userAuth,
   userLogin,
   userRegister,
   serializeUser,

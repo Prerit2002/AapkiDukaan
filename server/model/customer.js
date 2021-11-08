@@ -23,20 +23,22 @@ const Address = new Mongoose.Schema({
 })
 const PurchaseHistory = new Mongoose.Schema({
     SellerId : {
-        type:String,
-        required:true
+        type: Mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "Seller",
     },
     Price : {
         type:Number,
         required:true
     },
     ProductId:{
-        type:String,
-        required:true
+        type: Mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "Products",
     },
     AddressId:{
-        type:String,
-        required:true
+        type: Mongoose.Schema.Types.ObjectId,
+        required: true,
     },
     Status:{
         type:Boolean,
