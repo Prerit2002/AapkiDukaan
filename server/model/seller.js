@@ -1,6 +1,18 @@
 const Mongoose = require("mongoose");
 const personalDetails = new Mongoose.Schema({
-  sellerName: {
+  Name: {
+    type: String,
+    required: true,
+  },
+  Email: {
+    type: String,
+    required: true,
+  },
+  Phone: {
+    type: Number,
+    required: true,
+  },
+  ShopName: {
     type: String,
     required: true,
   },
@@ -8,19 +20,9 @@ const personalDetails = new Mongoose.Schema({
     type: String,
     required: true,
   },
-  shopName: {
-    type: String,
+  AadharNo: {
+    type: Number,
     required: true,
-  },
-  domain: {
-    type: String,
-    required: true,
-  },
-  gender: {
-    type: String,
-  },
-  IdProof: {
-    type: String,
   },
 });
 
@@ -40,6 +42,28 @@ const PromoCode = new Mongoose.Schema({
     type: Number,
     required: true,
   },
+});
+
+const ColorPalette = new Mongoose.Schema({
+  Code: {
+    type: String,
+    required: true,
+  },
+  Title: {
+    type: Date,
+  },
+  Sphone: {
+    type: Number,
+    required: true,
+  },
+  Semail: {
+    type: String,
+    required: true,
+  },
+  Categories: [{
+    type: String,
+    required: true,
+   } ],
 });
 
 const Billing = new Mongoose.Schema({
@@ -71,29 +95,39 @@ const WebsiteData = new Mongoose.Schema({
     type: String,
     required: true,
   },
-  Font: {
-    type: String,
-    required: true,
-  },
-  ColorPallete: {
-    Color1: {
-      type: String,
-      required: true,
-    },
-    Color2: {
-      type: String,
-      required: true,
-    },
-    Color3: {
-      type: String,
-      required: true,
-    },
-  },
-  ThemeId: {
+ 
+  PayTM: {
     type: Number,
     required: true,
   },
+  GST: {
+    type: Number,
+    required: true,
+  },
+  Categories: [{
+    type: String,
+    required: true,
+   } ],
+   Color: {
+    type: String,
+    required: true,
+  },
+  Title: {
+    type: String,
+    required: true
+  },
+  Sphone: {
+    type: Number
+   
+  },
+  Semail: {
+    type: String
+  
+  }
+ 
+ 
 });
+
 
 const Sales = new Mongoose.Schema({
   ProdId: {
@@ -153,18 +187,15 @@ const sellerSchema = new Mongoose.Schema(
     PromoCode: [PromoCode],
     Products: [Products],
     WebsiteData: WebsiteData,
-    Username: {
-      type: String,
-      required: true,
-    },
-    Password: {
-      type: String,
-      required: true,
-    },
-    Email: {
-      type: String,
-      required: true,
-    },
+    
+AdminUserName: {
+  type: String,
+  required: true,
+},
+Password: {
+  type: String,
+  required: true,
+}
   },
   {
     collection: "Sellers",

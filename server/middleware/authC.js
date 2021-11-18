@@ -2,16 +2,18 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const Customer = require("../model/customer");
+const Seller = require("../model/seller");
 const { SECRET } = require("../config");
 
 /**
  * @DESC To register the user (ADMIN, SUPER_ADMIN, USER)
  */
-const userRegister = async (userDets, res) => {
-    console.log(userDets)
+const userRegister = async (req, res, next) => {
+  let params = req.params.Seller
+  console.log(params)
   try {
     // Validate the username
-    let usernameNotTaken = await validateUsername(userDets.username);
+    let usernameNotTaken = await validateUsername(req.body.AdminUserName,params);
     if (!usernameNotTaken) {
       return res.status(400).json({
         message: `Username is already taken.`,
@@ -20,7 +22,7 @@ const userRegister = async (userDets, res) => {
     }
 
     // validate the email
-    let emailNotRegistered = await validateEmail(userDets.email);
+    let emailNotRegistered = await validateEmail(req.body.Email);
     if (!emailNotRegistered) {
       return res.status(400).json({
         message: `Email is already registered.`,
@@ -30,23 +32,11 @@ const userRegister = async (userDets, res) => {
 
 
     // Get the hashed password
-    const password = await bcrypt.hash(userDets.password, 12);
+    const password = await bcrypt.hash(req.body.Password, 12);
     // create a new user
-    const newUser = new Customer({
-      Email : userDets.email,
-      Password : password,
-      Username : userDets.username,
-      Name : userDets.Name,
-      PhoneNo : userDets.PhoneNo,
-      Address : userDets.Address,
-      PurchaseHistory : userDets.PurchaseHistory,
-    });
-    console.log(newUser)
-    await newUser.save();
-    return res.status(201).json({
-      message: "Hurry! now you are successfully registred. Please nor login.",
-      success: true
-    });
+    req.body["Password"] = password
+    next()
+
   } catch (err) {
     // Implement logger function (winston)
     console.log('hey')
@@ -60,10 +50,20 @@ const userRegister = async (userDets, res) => {
 /**
  * @DESC To Login the user (ADMIN, SUPER_ADMIN, USER)
  */
-const userLogin = async (userCreds, role, res) => {
-  let { username, password } = userCreds;
+const userLogin = async (req,res) => {
+  let role = req.params.role
+  let { username, password } = req.body;
+  let user;
+  if(role==='Seller') {
+     user = await Seller.findOne({ AdminUserName : username });
+  }
+  else if(role==='Customer') {
+     user = await Customer.findOne({ AdminUserName : username });
+  }
+  else {
+    return;
+  }
   // First Check if the username is in the database
-  const user = await Customer.findOne({ Username : username });
   if (!user) {
     return res.status(404).json({
       message: "Username is not found. Invalid login credentials.",
@@ -71,23 +71,23 @@ const userLogin = async (userCreds, role, res) => {
     });
   }
  
-  let isMatch = await bcrypt.compare(password, user.password);
+  let isMatch = await bcrypt.compare(password, user.Password);
   if (isMatch) {
     // Sign in the token and issue it to the user
+
     let token = jwt.sign(
       {
         user_id: user._id,
-        username: user.username,
-        email: user.email
+        username: user.AdminUserName,
+        email: user.PersonalDetails.Email
       },
-      SECRET,
+      process.env.SECRET,
       { expiresIn: "7 days" }
     );
 
     let result = {
-      username: user.username,
-      role: user.role,
-      email: user.email,
+      username: user.AdminUserName,
+      email: user.PersonalDetails.Email,
       token: `Bearer ${token}`,
       expiresIn: 168
     };
@@ -105,15 +105,25 @@ const userLogin = async (userCreds, role, res) => {
   }
 };
 
-const validateUsername = async username => {
-  let user = await Customer.findOne({ Username : username });
-  return user ? false : true;
+const validateUsername = async (username,params) => {
+  if(params==='Seller') {
+    let user = await Seller.findOne({ AdminUserName : username });
+    return user ? false : true;
+  }
+  else if(params==='Customer'){
+    let user = await Customer.findOne({ Username : username });
+    return user ? false : true;
+  }
+  else{
+    return false;
+  }
 };
 
 /**
  * @DESC Passport middleware
  */
-const userAuth = passport.authenticate('jwt', { session: false });
+const AuthC = passport.authenticate('Customer','jwt', { session: false });
+const AuthS = passport.authenticate('Seller', { session: false });
 
 /**
  * @DESC Check Role Middleware
@@ -194,7 +204,8 @@ const findusers = (req, res) => {
 
 
 module.exports = {
-  userAuth,
+  AuthC,
+  AuthS,
   userLogin,
   userRegister,
   serializeUser,

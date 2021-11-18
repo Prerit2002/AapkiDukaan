@@ -12,6 +12,8 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan('tiny'));
 app.use(passport.initialize());
+app.use(passport.session());
+require("./server/middleware/passport")(passport);
 connectDB();
 app.use(express.urlencoded({ extended : true}))
 app.use('/', require('./server/routes/router'))
