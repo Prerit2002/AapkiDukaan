@@ -9,11 +9,12 @@ const AuthC = require("../middleware/authC");
 
 route.get("/api/test",AuthC.AuthS,seller.Check);
 route.post("/api/createProduct", products.createProduct);
-route.put("/api/products/addVariant/:id", products.addVariant);
-route.put("/api/addAddress/:id", customer.addAddress);
-route.post("/api/createexecutive", executive.createExecutive);
-route.put("/api/addExecutive/:id", executive.addExecutive);
-route.post("/api/createUser/:Seller", AuthC.userRegister, seller.createSeller);
+// route.put("/api/products/addVariant/:id", products.addVariant);
+// route.put("/api/addAddress/:id", customer.addAddress);
+// route.post("/api/createexecutive", executive.createExecutive);
+// route.put("/api/addExecutive/:id", executive.addExecutive);
+route.post("/api/create/Seller", AuthC.userRegister, seller.createSeller);
+route.post("/api/create/Customer", AuthC.userRegister, customer.createCustomer);
 route.get("/api/loginUser/:role",AuthC.userLogin);
-
+route.get("/api/test",AuthC.AuthC,seller.Check);
 module.exports = route;
