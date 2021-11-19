@@ -21,4 +21,5 @@ route.get("/api/test",Auth.AuthC,seller.Check);
 route.get("/api/test2",Auth.AuthS,customer.Check);
 route.put("/api/createProduct",products.createProduct,seller.AddProducts);
 route.put("/api/addProduct",seller.AddProducts);
+route.put("/api/updateWebsite/:id",seller.UpdateSetting);
 module.exports = route;

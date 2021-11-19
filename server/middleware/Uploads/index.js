@@ -48,7 +48,7 @@ const upload = multer({ storage });
 // @desc  Uploads file to DB
 router.post('/upload', upload.single('file'), (req, res) => {
   // res.json({ file: req.file });
-  res.json({message : "Uploaded"});
+  res.json({url : req.file.filename});
 });
 
 // @route GET /files

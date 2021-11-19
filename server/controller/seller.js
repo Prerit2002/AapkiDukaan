@@ -52,7 +52,10 @@ exports.findSellerbyDomain = (req,res) => {
     console.log(req.body)
     Seller.findOne({'WebsiteData.Domain' : req.body.Domain})
     .then((data)=>{
-        res.send(data.WebsiteData)
+        res.send({
+            Website : data.WebsiteData,
+            _id : data._id
+        })
     })
     .catch((e)=>{
         res.status(404).send({error:"Seller Not Found"})
@@ -75,3 +78,13 @@ exports.AddProducts = (req,res)=>{
            console.log(e)
        })
 }
+
+exports.UpdateSetting = (req,res) =>{
+    console.log(req.params.id, req.body)
+    Seller.updateOne({_id : req.params.id},{WebsiteData : req.body.WebsiteData}).then((data)=>{
+        console.log('Success')
+        res.send(data)
+    }).catch(e=>{
+       console.log(e)
+    })
+    }
