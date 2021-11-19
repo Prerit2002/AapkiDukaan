@@ -8,6 +8,7 @@ const executive = require("../controller/executive");
 const AuthC = require("../middleware/authC");
 
 route.get("/api/test",AuthC.AuthS,seller.Check);
+route.put("/api/findSellerbyDomain",seller.findSellerbyDomain);
 route.post("/api/createProduct", products.createProduct);
 // route.put("/api/products/addVariant/:id", products.addVariant);
 // route.put("/api/addAddress/:id", customer.addAddress);

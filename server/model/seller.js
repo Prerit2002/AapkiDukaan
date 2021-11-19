@@ -27,9 +27,6 @@ const PromoCode = new Mongoose.Schema({
     type: String,
     required: true,
   },
-  ExpiryDate: {
-    type: Date,
-  },
   Discount: {
     type: Number,
     required: true,
@@ -140,14 +137,10 @@ const Products = new Mongoose.Schema({
     required: true,
     ref: "Products",
   },
-  Variant: [
-    {
-      Price: {
-        type: Number,
-        required: true,
-      },
-    },
-  ],
+  Price: {
+    type: Number,
+    required: true,
+  },
   CategoryId: {
     type: Mongoose.Schema.Types.ObjectId,
     required: true,

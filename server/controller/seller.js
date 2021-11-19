@@ -35,8 +35,6 @@ exports.createSeller = async  (req,res) => {
             Email : req.body.Email,
 
         })
-
-
         console.log(seller)
         await seller.save()
         res.status(200).send(seller)
@@ -47,4 +45,16 @@ exports.createSeller = async  (req,res) => {
 }
 exports.Check = async(req,res) => {
     res.send({message : "All Good"})
+}
+
+
+exports.findSellerbyDomain = (req,res) => {
+    console.log(req.body)
+    Seller.findOne({'WebsiteData.Domain' : req.body.Domain})
+    .then((data)=>{
+        res.send(data.WebsiteData)
+    })
+    .catch((e)=>{
+        res.status(404).send({error:"Seller Not Found"})
+    })
 }
