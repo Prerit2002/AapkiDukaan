@@ -10,7 +10,6 @@ exports.createSeller = async  (req,res) => {
 
         const PersonalDetails={
             Name : req.body.Name,
-            Email : req.body.Email,
             Phone : req.body.Phone,
             ShopName : req.body.ShopName,
             Address : req.body.Address,
@@ -31,8 +30,10 @@ exports.createSeller = async  (req,res) => {
         const seller = new Seller({
             PersonalDetails : PersonalDetails,
             WebsiteData : WebsiteData,
-            AdminUserName : req.body.AdminUserName,
-            Password : req.body.Password
+            Username : req.body.Username,
+            Password : req.body.Password,
+            Email : req.body.Email,
+
         })
 
 

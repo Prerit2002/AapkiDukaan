@@ -1,9 +1,5 @@
 const Mongoose = require('mongoose')
 const Address = new Mongoose.Schema({
-    Hno : {
-        type:Number,
-        required:true
-    },
     Street : {
         type:String,
         required:true
@@ -12,16 +8,16 @@ const Address = new Mongoose.Schema({
         type:String,
         required:true
     },
-    Landmark:{
-        type:String,
-        required:true
-    },
     Pincode:{
         type:Number,
         required:true
+    },
+    State:{
+        type: String,
+        required:true
     }
 })
-const PurchaseHistory = new Mongoose.Schema({
+const Orders = new Mongoose.Schema({
     SellerId : {
         type: Mongoose.Schema.Types.ObjectId,
         required: true,
@@ -36,18 +32,19 @@ const PurchaseHistory = new Mongoose.Schema({
         required: true,
         ref: "Products",
     },
-    AddressId:{
-        type: Mongoose.Schema.Types.ObjectId,
-        required: true,
-    },
+    Address,
     Status:{
         type:Boolean,
         required:true
     }
 })
 const CustomerSchema = new Mongoose.Schema({
-    Address: [Address],
-    Name : {
+    Address,
+    FirstName : {
+        type: String,
+        required: true
+    },
+    LastName : {
         type: String,
         required: true
     },
@@ -59,7 +56,6 @@ const CustomerSchema = new Mongoose.Schema({
         type: String,
         required: true
     },
-  
     Email : {
         type: String,
         required: true
@@ -68,7 +64,7 @@ const CustomerSchema = new Mongoose.Schema({
         type: Number,
         required: true
     },
-    PurchaseHistory : [PurchaseHistory]
+    Orders : [Orders]
 }, 
 {
     collection : 'Customers'

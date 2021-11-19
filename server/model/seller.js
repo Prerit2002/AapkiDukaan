@@ -4,10 +4,6 @@ const personalDetails = new Mongoose.Schema({
     type: String,
     required: true,
   },
-  Email: {
-    type: String,
-    required: true,
-  },
   Phone: {
     type: Number,
     required: true,
@@ -44,27 +40,7 @@ const PromoCode = new Mongoose.Schema({
   },
 });
 
-const ColorPalette = new Mongoose.Schema({
-  Code: {
-    type: String,
-    required: true,
-  },
-  Title: {
-    type: Date,
-  },
-  Sphone: {
-    type: Number,
-    required: true,
-  },
-  Semail: {
-    type: String,
-    required: true,
-  },
-  Categories: [{
-    type: String,
-    required: true,
-   } ],
-});
+
 
 const Billing = new Mongoose.Schema({
   BillAmt: {
@@ -187,15 +163,18 @@ const sellerSchema = new Mongoose.Schema(
     PromoCode: [PromoCode],
     Products: [Products],
     WebsiteData: WebsiteData,
-    
-AdminUserName: {
-  type: String,
-  required: true,
-},
-Password: {
-  type: String,
-  required: true,
-}
+    Username: {
+     type: String,
+     required: true,
+    },
+    Password: {
+       type: String,
+        required: true,
+    },
+    Email: {
+      type: String,
+      required: true,
+    },
   },
   {
     collection: "Sellers",
