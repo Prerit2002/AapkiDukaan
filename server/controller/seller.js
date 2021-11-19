@@ -21,7 +21,7 @@ exports.createSeller = async  (req,res) => {
             PayTM : req.body.PayTM,
             GST : req.body.GST,
             Categories : req.body.Categories,
-            Color : req.body.ColorPalette,
+            Color : req.body.Color,
             Title : req.body.Title,
             Sphone : req.body.Sphone,
             Semail : req.body.Semail

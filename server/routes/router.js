@@ -17,4 +17,5 @@ route.post("/api/create/Seller", AuthC.userRegister, seller.createSeller);
 route.post("/api/create/Customer", AuthC.userRegister, customer.createCustomer);
 route.get("/api/loginUser/:role",AuthC.userLogin);
 route.get("/api/test",AuthC.AuthC,seller.Check);
+route.get("/api/test2",AuthC.AuthS,customer.Check);
 module.exports = route;

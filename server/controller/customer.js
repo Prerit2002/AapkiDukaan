@@ -29,3 +29,6 @@ exports.createCustomer = async  (req,res) => {
        res.status(500).send(err)
    }
 }
+exports.Check = async(req,res) => {
+  res.send({message : "All Good"})
+}
