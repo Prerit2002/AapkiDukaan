@@ -58,3 +58,20 @@ exports.findSellerbyDomain = (req,res) => {
         res.status(404).send({error:"Seller Not Found"})
     })
 }
+
+exports.AddProducts = (req,res)=>{
+    console.log(req.body)
+    Seller.updateOne(
+        { _id: req.body.id },
+        { $addToSet: { Products: {
+          ProductId : req.body.ProductId,
+          Price : req.body.Price,
+          CategoryId : req.body.CategoryId,
+        }} }
+       ).then((data)=>{
+            console.log('Success')
+            res.send(data)
+       }).catch(e=>{
+           console.log(e)
+       })
+}

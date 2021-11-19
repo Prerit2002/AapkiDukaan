@@ -9,14 +9,11 @@ const { SECRET } = require("../config");
  * @DESC To register the user (ADMIN, SUPER_ADMIN, USER)
  */
 const userRegister = async (req, res, next) => {
-  let params = req.originalUrl
-  params = params.split('/').splice(2);
-  console.log(params)
-  params = params[1]
+  let params = req.params.Seller
   console.log(params)
   try {
     // Validate the username
-    let usernameNotTaken = await validateUsername(req.body.Username,params);
+    let usernameNotTaken = await validateUsername(req.body.AdminUserName,params);
     if (!usernameNotTaken) {
       return res.status(400).json({
         message: `Username is already taken.`,
@@ -25,7 +22,7 @@ const userRegister = async (req, res, next) => {
     }
 
     // validate the email
-    let emailNotRegistered = await validateEmail(req.body.Email,params);
+    let emailNotRegistered = await validateEmail(req.body.Email);
     if (!emailNotRegistered) {
       return res.status(400).json({
         message: `Email is already registered.`,
@@ -42,7 +39,7 @@ const userRegister = async (req, res, next) => {
 
   } catch (err) {
     // Implement logger function (winston)
-    console.log(err)
+    console.log('hey')
     return res.status(500).json({
       message: "Unable to create your account.",
       success: false
@@ -58,10 +55,10 @@ const userLogin = async (req,res) => {
   let { username, password } = req.body;
   let user;
   if(role==='Seller') {
-     user = await Seller.findOne({ Username : username });
+     user = await Seller.findOne({ AdminUserName : username });
   }
   else if(role==='Customer') {
-     user = await Customer.findOne({ Username : username });
+     user = await Customer.findOne({ AdminUserName : username });
   }
   else {
     return;
@@ -81,16 +78,16 @@ const userLogin = async (req,res) => {
     let token = jwt.sign(
       {
         user_id: user._id,
-        username: user.Username,
-        email: user.Email
+        username: user.AdminUserName,
+        email: user.PersonalDetails.Email
       },
       process.env.SECRET,
       { expiresIn: "7 days" }
     );
 
     let result = {
-      username: user.Username,
-      email: user.Email,
+      username: user.AdminUserName,
+      email: user.PersonalDetails.Email,
       token: `Bearer ${token}`,
       expiresIn: 168
     };
@@ -110,7 +107,7 @@ const userLogin = async (req,res) => {
 
 const validateUsername = async (username,params) => {
   if(params==='Seller') {
-    let user = await Seller.findOne({ Username : username });
+    let user = await Seller.findOne({ AdminUserName : username });
     return user ? false : true;
   }
   else if(params==='Customer'){
@@ -126,25 +123,15 @@ const validateUsername = async (username,params) => {
  * @DESC Passport middleware
  */
 const AuthC = passport.authenticate('Customer','jwt', { session: false });
-const AuthS = passport.authenticate('Seller', { session: false });
+const AuthS = passport.authenticate('Seller','jwt', { session: false });
 
 /**
  * @DESC Check Role Middleware
  */
 
-const validateEmail = async (email,params) => {
-  if(params==='Seller') {
-    let user = await Seller.findOne({ Email : email });
+const validateEmail = async email => {
+  let user = await Customer.findOne({ Email : email });
   return user ? false : true;
-  }
-  else if(params==='Customer'){
-    let user = await Customer.findOne({ Email : email });
-    return user ? false : true;
-  }
-  else{
-    return false;
-  }
-  
 };
 
 const serializeUser = req => {
