@@ -29,3 +29,13 @@ exports.GetProducts = async (req, res) => {
         res.status(404).send(e)
     }))
 }
+
+exports.Fprod = async (req,res) => {
+  Products.findById(mongoose.Types.ObjectId(req.params.pid)).then((data)=>{
+    console.log(req.body.ProdData)
+    req.body.ProdData["Name"] = data.Name
+    req.body.ProdData["Photo"] = data.Photo
+    const returnedTarget = Object.assign(data,req.body.ProdData);
+    res.send(returnedTarget)
+  })
+}

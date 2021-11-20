@@ -1,5 +1,5 @@
 var Seller = require('../model/seller')
-
+var Products = require('../model/products')
 exports.createSeller = async  (req,res) => {
     try {
         if (!req.body){
@@ -97,8 +97,47 @@ exports.GetProducts = (req,res) =>{
         res.status(500).send(e)
     })
 }
+
+//   exports.GetProductsAll = async (req,res) =>{
+//     const SellerProds = async () => Seller.findOne({_id : req.params.id}).then((data)=>{
+//             return data.Products
+//         })
+//     const ELprod = async (v) => Products.findOne({_id : v._id}).then((data)=>{
+//         return data
+//     })
+//     let Arr =  await SellerProds()
+//     console.log(Arr)
+//     let Arr2 = []
+//     Arr.forEach(async el=>{
+//        let v = await ELprod(el._id)
+//        console.log(v)
+//         const returnedTarget = Object.assign(v,el);
+//        Arr2.push(returnedTarget)
+//     })
+//     console.log(Arr2)
+//     res.send(Arr2)
+//   }
 exports.GetProductsbyCategory = (req,res) =>{
-    Seller.find({'_id' : req.params.id},{'Products': {$elemMatch: {Category: req.body.Category}}}).then( (data) => {
-        res.send(data)
-    });
-}
+    console.log(req.body)
+    Seller.findById(req.params.id).then((data)=>{
+         data = data.Products.filter((el)=>{
+            return (el.Category===req.body.Category)
+        })
+        if(data.length>0) {
+          res.send(data)
+        }
+        else {
+            res.status(404).send('Not Found')   
+        }
+    }).catch(e=>{
+        res.status(500).send(e)
+    })
+    }
+    
+  exports.Fprod = (req,res,next) => {
+      Seller.find({'_id' : req.params.id},{'Products' : {$elemMatch : {'_id' : req.params.pid}}}).then(data=>{
+          req.body["ProdData"] = data[0].Products[0]
+          next()
+      }).catch(e=>{ console.log(e)})
+
+    }

@@ -141,6 +141,11 @@ const Products = new Mongoose.Schema({
     required: true,
     ref: "Pricing",
   },
+  _id : {
+    type: Mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "Products",
+  }
 });
 
 const sellerSchema = new Mongoose.Schema(
