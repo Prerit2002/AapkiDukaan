@@ -32,3 +32,9 @@ exports.createCustomer = async  (req,res) => {
 exports.Check = async(req,res) => {
   res.send({message : "All Good"})
 }
+
+exports.ShowCustomer = (req,res)=>{
+   Customer.find({}).then(data=>{
+      res.send(data)
+   })
+}

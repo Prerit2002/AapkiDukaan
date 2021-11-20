@@ -22,4 +22,7 @@ route.get("/api/test2",Auth.AuthS,customer.Check);
 route.put("/api/createProduct",products.createProduct,seller.AddProducts);
 route.put("/api/addProduct",seller.AddProducts);
 route.put("/api/updateWebsite/:id",seller.UpdateSetting);
+route.get("/api/showCustomer",customer.ShowCustomer);
+route.get("/api/showClient",seller.ShowClient);
+route.get("/api/showProduct",products.ShowProducts);
 module.exports = route;

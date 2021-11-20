@@ -24,11 +24,9 @@ exports.createProduct =   (req,res,next) => {
     }
 }
 
-// exports.addVariant = async (req,res) =>{
-//     Products.updateOne(
-//      { _id: req.params.id },
-//      { $addToSet: { Variants: req.body.Variant } }
-//     ).then((data)=>{
-//          res.send(data)
-//     })
-// }
+exports.ShowProducts = (req,res)=>{
+    Products.find({}).then(data=>{
+       
+       res.send(data)
+    })
+ }
