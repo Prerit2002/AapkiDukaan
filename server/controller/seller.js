@@ -67,9 +67,9 @@ exports.AddProducts = (req,res)=>{
     Seller.updateOne(
         { _id: req.body.id },
         { $addToSet: { Products: {
-          ProductId : req.body.ProductId,
+          _id : req.body.ProductId,
           Price : req.body.Price,
-          CategoryId : req.body.CategoryId,
+          Category : req.body.Category,
         }} }
        ).then((data)=>{
             console.log('Success')
@@ -88,3 +88,17 @@ exports.UpdateSetting = (req,res) =>{
        console.log(e)
     })
     }
+
+exports.GetProducts = (req,res) =>{
+    Seller.findOne({_id : req.params.id}).then((data)=>{
+        res.send(data.Products)
+    }
+    ).catch(e=>{
+        res.status(500).send(e)
+    })
+}
+exports.GetProductsbyCategory = (req,res) =>{
+    Seller.find({'_id' : req.params.id},{'Products': {$elemMatch: {Category: req.body.Category}}}).then( (data) => {
+        res.send(data)
+    });
+}
