@@ -88,3 +88,10 @@ exports.UpdateSetting = (req,res) =>{
        console.log(e)
     })
     }
+
+exports.ShowClient = (req,res)=>{
+        Seller.find({}).then(data=>{
+           res.send(data)
+        })
+     }
+     
