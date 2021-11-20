@@ -20,9 +20,17 @@ route.get("/api/loginUser/:role",Auth.userLogin);
 route.get("/api/test",Auth.AuthC,seller.Check);
 route.get("/api/test2",Auth.AuthS,customer.Check);
 route.put("/api/createProduct",products.createProduct,seller.AddProducts);
+route.get("/api/findSellerProducts/:id",seller.GetProducts);
+route.put("/api/findProductsbyCategory/:id",seller.GetProductsbyCategory);
+route.get("/api/findProduct/:id",products.GetProducts);
 route.put("/api/addProduct",seller.AddProducts);
 route.put("/api/updateWebsite/:id",seller.UpdateSetting);
+<<<<<<< HEAD
 route.get("/api/showCustomer",customer.ShowCustomer);
 route.get("/api/showClient",seller.ShowClient);
 route.get("/api/showProduct",products.ShowProducts);
+=======
+route.get("/api/getFullProduct/:id/:pid",seller.Fprod,products.Fprod);
+// route.get("/api/getAllProducts/:id/",seller.GetProductsAll);
+>>>>>>> 9b8f5b50a8859be3fcb3ce1f2eee9fbd9b3c39c8
 module.exports = route;

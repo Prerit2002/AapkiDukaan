@@ -132,20 +132,20 @@ const Sales = new Mongoose.Schema({
 });
 
 const Products = new Mongoose.Schema({
-  ProductId: {
-    type: Mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "Products",
-  },
   Price: {
     type: Number,
     required: true,
   },
-  CategoryId: {
-    type: Mongoose.Schema.Types.ObjectId,
+  Category: {
+    type: String,
     required: true,
     ref: "Pricing",
   },
+  _id : {
+    type: Mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "Products",
+  }
 });
 
 const sellerSchema = new Mongoose.Schema(
