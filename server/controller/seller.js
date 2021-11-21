@@ -1,5 +1,6 @@
 var Seller = require('../model/seller')
 var Products = require('../model/products')
+
 exports.createSeller = async  (req,res) => {
     try {
         if (!req.body){
@@ -35,6 +36,7 @@ exports.createSeller = async  (req,res) => {
             Email : req.body.Email,
 
         })
+     
         console.log(seller)
         await seller.save()
         res.status(200).send(seller)
@@ -147,3 +149,56 @@ exports.GetProductsbyCategory = (req,res) =>{
       }).catch(e=>{ console.log(e)})
 
     }
+
+
+
+exports.CreatePromoCode = (req, res) => {
+    Seller.updateOne(
+        { _id: req.params.id },
+        { $addToSet: { PromoCode: {
+          Code : req.body.Code,
+          Discount : req.body.Discount,
+          MaxDiscount : req.body.MaxDiscount,
+        }} }
+       ).then((data)=>{
+            console.log('Success')
+            res.send(data)
+       })
+  };
+
+exports.GetPromoCode = (req,res) =>{
+    Seller.findOne({_id : req.params.id}).then((data)=>{
+        res.send(data.PromoCode)
+    }
+    ).catch(e=>{
+        res.status(500).send(e)
+    })
+}
+
+exports.CheckPromo = (req,res) =>{
+    let Code=req.body.Code
+    let Total=req.body.Total
+    let MaxDiscount;
+    let Discount;
+    let TotalPrice;
+    let DiscountPrice;
+    Seller.find( {_id:req.params.id}, { PromoCode : { $elemMatch: {  Code : Code } } } ).then((data)=>{
+     
+        Discount=data[0].PromoCode[0].Discount
+        MaxDiscount=data[0].PromoCode[0].MaxDiscount
+        DiscountPrice=(Total*Discount)/100
+        if (DiscountPrice<MaxDiscount) {
+            TotalPrice=Total-DiscountPrice
+        } else {
+            TotalPrice=Total-MaxDiscount
+        }
+
+        res.send({
+            NewTotal: TotalPrice,
+            Discount:(Total-TotalPrice)
+        })
+    }
+    ).catch(e=>{
+        res.status(500).send(e)
+    })
+}
