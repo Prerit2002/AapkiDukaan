@@ -6,9 +6,7 @@ exports.createSeller = async  (req,res) => {
         if (!req.body){
             console.log("body ")
         }
-
         console.log(req.body)
-
         const PersonalDetails={
             Name : req.body.Name,
             Phone : req.body.Phone,
@@ -36,12 +34,12 @@ exports.createSeller = async  (req,res) => {
             Email : req.body.Email,
 
         })
-     
         console.log(seller)
         await seller.save()
         res.status(200).send(seller)
 
     }catch(err) {
+        console.log(err)
         res.status(500).send(err)
     }
 }
@@ -113,16 +111,16 @@ exports.GetProducts = (req,res) =>{
     const ELprod = async (v) => Products.findOne({_id : v._id}).then((data)=>{
         return data
     })
-    let Arr =  await SellerProds()
-    console.log(Arr)
-    let Arr2 = []
-    Arr.forEach(async el=>{
-       let v = await ELprod(el._id)
-       console.log(v)
-        const returnedTarget = Object.assign(v,el);
-       Arr2.push(returnedTarget)
-    })
-    console.log(Arr2)
+    let Arr = await SellerProds()
+    let Arr2=[];
+    for(let i=0; i<Arr.length; i++) {
+        let v = await ELprod(Arr[i]._id)
+        Arr[i]["Name"] = v.Name
+        Arr[i]["Photo"] = v.Photo
+        const returnedTarget = Object.assign(v,Arr[i]);
+        Arr[i] = returnedTarget
+        Arr2.push(returnedTarget)
+    }
     res.send(Arr2)
   }
 exports.GetProductsbyCategory = (req,res) =>{

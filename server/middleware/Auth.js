@@ -8,12 +8,26 @@ const { SECRET } = require("../config");
 /**
  * @DESC To register the user (ADMIN, SUPER_ADMIN, USER)
  */
+ function URLToArray(url) {
+  var request = {};
+  var pairs = url.substring(url.indexOf('?') + 1).split('&');
+  for (var i = 0; i < pairs.length; i++) {
+      if(!pairs[i])
+          continue;
+      var pair = pairs[i].split('=');
+      request[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+   }
+   return request;
+}
+
 const userRegister = async (req, res, next) => {
-  let params = req.params.Seller
-  console.log(params)
+  
+  let params =req.originalUrl.split('/')
+  params=params[3]
   try {
     // Validate the username
-    let usernameNotTaken = await validateUsername(req.body.AdminUserName,params);
+
+    let usernameNotTaken = await validateUsername(req.body.Username,params);
     if (!usernameNotTaken) {
       return res.status(400).json({
         message: `Username is already taken.`,
@@ -21,14 +35,14 @@ const userRegister = async (req, res, next) => {
       });
     }
 
-    // validate the email
-    let emailNotRegistered = await validateEmail(req.body.Email);
-    if (!emailNotRegistered) {
-      return res.status(400).json({
-        message: `Email is already registered.`,
-        success: false
-      });
-    }
+    // // validate the email
+    // let emailNotRegistered = await validateEmail(req.body.Email);
+    // if (!emailNotRegistered) {
+    //   return res.status(400).json({
+    //     message: `Email is already registered.`,
+    //     success: false
+    //   });
+    // }
 
 
     // Get the hashed password
@@ -107,7 +121,7 @@ const userLogin = async (req,res) => {
 
 const validateUsername = async (username,params) => {
   if(params==='Seller') {
-    let user = await Seller.findOne({ AdminUserName : username });
+    let user = await Seller.findOne({ Username : username });
     return user ? false : true;
   }
   else if(params==='Customer'){
