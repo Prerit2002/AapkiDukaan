@@ -29,5 +29,5 @@ route.get("/api/showCustomer",customer.ShowCustomer);
 route.get("/api/showClient",seller.ShowClient);
 route.get("/api/showProduct",products.ShowProducts);
 route.get("/api/getFullProduct/:id/:pid",seller.Fprod,products.Fprod);
-// route.get("/api/getAllProducts/:id/",seller.GetProductsAll);
+route.get("/api/getAllProducts/:id/",seller.GetProductsAll);
 module.exports = route;

@@ -104,25 +104,25 @@ exports.GetProducts = (req,res) =>{
     })
 }
 
-//   exports.GetProductsAll = async (req,res) =>{
-//     const SellerProds = async () => Seller.findOne({_id : req.params.id}).then((data)=>{
-//             return data.Products
-//         })
-//     const ELprod = async (v) => Products.findOne({_id : v._id}).then((data)=>{
-//         return data
-//     })
-//     let Arr =  await SellerProds()
-//     console.log(Arr)
-//     let Arr2 = []
-//     Arr.forEach(async el=>{
-//        let v = await ELprod(el._id)
-//        console.log(v)
-//         const returnedTarget = Object.assign(v,el);
-//        Arr2.push(returnedTarget)
-//     })
-//     console.log(Arr2)
-//     res.send(Arr2)
-//   }
+  exports.GetProductsAll = async (req,res) =>{
+    const SellerProds = async () => Seller.findOne({_id : req.params.id}).then((data)=>{
+            return data.Products
+        })
+    const ELprod = async (v) => Products.findOne({_id : v._id}).then((data)=>{
+        return data
+    })
+    let Arr =  await SellerProds()
+    console.log(Arr)
+    let Arr2 = []
+    Arr.forEach(async el=>{
+       let v = await ELprod(el._id)
+       console.log(v)
+        const returnedTarget = Object.assign(v,el);
+       Arr2.push(returnedTarget)
+    })
+    console.log(Arr2)
+    res.send(Arr2)
+  }
 exports.GetProductsbyCategory = (req,res) =>{
     console.log(req.body)
     Seller.findById(req.params.id).then((data)=>{
